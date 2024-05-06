@@ -14,12 +14,6 @@ class GuesserTest : public ::testing::Test
 		virtual void TearDown(){} //clean up after each test, (before destructor)
 };
 
-/* Example test
-TEST(GuesserTest, smoke_test)
-{
-    ASSERT_EQ( 1+1, 2 );
-}
-*/
 
 TEST(GuesserTest, empty_string_match){
 	Guesser myguess = Guesser("");
