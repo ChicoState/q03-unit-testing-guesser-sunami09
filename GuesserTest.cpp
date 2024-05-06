@@ -64,6 +64,8 @@ TEST(GuesserTest, char_32_match){
 }
 
 
+
+
 TEST(GuesserTest, initial_guess_remaining){
 	Guesser myguess = Guesser("ac#$%@#dfgr");
 	ASSERT_EQ(3, myguess.remaining());
@@ -129,42 +131,35 @@ TEST(GuesserTest, guessed_thrice_set_remaining_to_initial){
 
 TEST(GuesserTest, distance_zero){
 	Guesser myguess = Guesser("guess");
-	myguess.match("guess");
-	ASSERT_EQ(0, myguess.get_distance());
+	ASSERT_EQ(0, myguess.distance("guess"));
 }
 
 TEST(GuesserTest, distance_one_space){
 	Guesser myguess = Guesser("guess");
-	myguess.match("guess ");
-	ASSERT_EQ(1, myguess.get_distance());
+	ASSERT_EQ(1, myguess.distance("guess "));
 }
 
 TEST(GuesserTest, distance_two_uppercase_space){
 	Guesser myguess = Guesser("guess");
-	myguess.match("guesS ");
-	ASSERT_EQ(2, myguess.get_distance());
+	ASSERT_EQ(2, myguess.distance("guesS "));
 }
 
 TEST(GuesserTest, distance_secret_size_maximum){
 	Guesser myguess = Guesser("guess");
-	myguess.match("guessguessguessguessguess");
-	ASSERT_EQ(5, myguess.get_distance());
+	ASSERT_EQ(5, myguess.distance("guessguessguessguessguess"));
 }
 
 TEST(GuesserTest, distance_secret_size_maximum_reverse){
 	Guesser myguess = Guesser("guessguessguessguessguess");
-	myguess.match("guess");
-	ASSERT_EQ(20, myguess.get_distance());
+	ASSERT_EQ(20, myguess.distance("guess"));
 }
 TEST(GuesserTest, Distance_EqualLength) {
     Guesser guesser("password");
-    guesser.match("passw0rd");
-    ASSERT_EQ(1, guesser.get_distance());  // 'o' and '0' are different.
+    ASSERT_EQ(1, guesser.distance("passw0rd"));  // 'o' and '0' are different.
 }
 TEST(GuesserTest, Distance_ShorterGuess) {
     Guesser guesser("password123");
-    guesser.match("password");
-    ASSERT_EQ(3, guesser.get_distance());  // Missing "123"
+    ASSERT_EQ(3, guesser.distance("password"));  // Missing "123"
 }
 
 TEST(GuesserTest, distance_locked){
@@ -177,4 +172,9 @@ TEST(GuesserTest, distance_locked_zero){
 	Guesser myguess = Guesser("guess");
 	myguess.match("guessguessguessguessguess");
 	ASSERT_EQ(0, myguess.remaining());
+}
+
+TEST(GuesserTest, distance_test){
+	Guesser guesser("password123");
+    ASSERT_EQ(3, guesser.distance("password"));
 }

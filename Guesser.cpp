@@ -41,8 +41,6 @@ unsigned int Guesser::distance(string guess){
     count = m_secret.size();
   }
 
-  checkDistance = count;
-
   return count;
   
 }
@@ -54,7 +52,12 @@ unsigned int Guesser::distance(string guess){
   otherwise, it will be truncated at that length.
 */
 Guesser::Guesser(string secret){
-    m_secret = secret.size() <= 32 ? secret : secret.substr(0, 32);
+  if (secret.size() <= 32) {
+    m_secret = secret;
+  } else {
+    m_secret = secret.substr(0, 32);
+  }
+
     m_remaining = 3;
 }
 
@@ -70,17 +73,18 @@ Guesser::Guesser(string secret){
   and the secret.
 */
 bool Guesser::match(string guess){
-  if(m_remaining == 0 || distance(guess) > 2){
-    m_remaining = 0;
-    return false;
-  }
-  else if(guess == m_secret){
+  if(m_remaining > 0 && guess == m_secret){
     m_remaining = 3;
     return true;
   }
-
-  m_remaining--;
-  return false;
+  else{
+    if(distance(guess) > 2){
+      m_remaining = 0;
+    }else{
+      m_remaining--;
+    }
+    return false;
+  }
 }
 
 /*
@@ -94,6 +98,3 @@ unsigned int Guesser::remaining(){
   return m_remaining;
 }
 
-unsigned int Guesser::get_distance() {
-  return checkDistance;
-}

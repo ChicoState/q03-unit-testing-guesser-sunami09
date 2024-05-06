@@ -2,6 +2,7 @@
 #define GUESSER_H
 
 #include <string>
+#include <gtest/gtest.h>
 
 using std::string;
 
@@ -23,6 +24,14 @@ private:
     has 100, the distance is 10.
   */
   unsigned int distance(string guess);
+  FRIEND_TEST(GuesserTest, distance_test);
+  FRIEND_TEST(GuesserTest, Distance_ShorterGuess);
+  FRIEND_TEST(GuesserTest, Distance_EqualLength);
+  FRIEND_TEST(GuesserTest, distance_secret_size_maximum_reverse);
+  FRIEND_TEST(GuesserTest, distance_secret_size_maximum);
+  FRIEND_TEST(GuesserTest, distance_two_uppercase_space);
+  FRIEND_TEST(GuesserTest, distance_one_space);
+  FRIEND_TEST(GuesserTest, distance_zero);
 
 public:
   /*
